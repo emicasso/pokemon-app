@@ -30,7 +30,7 @@ export default function List() {
 
   useEffect(() => {
     fetchPokemons();
-  }, [pages]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 
   //paginacion
