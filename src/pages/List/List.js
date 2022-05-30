@@ -12,25 +12,26 @@ export default function List() {
   const [pokemons, setPokemons] = useState([]);
 
   const itensPerPage = 20;
-  const fetchPokemons = async () => {
-    try {
-      setLoading(true);
-      const data = await getPokemones(itensPerPage, itensPerPage * pages);
-      const promises = data.results.map(async (pokemon) => {
-        return await getPokemonData(pokemon.url);
-      });
-      const result = await Promise.all(promises);
-      setPokemons(result);
-      setLoading(false);
-      setTotalPages(Math.ceil(data.count / itensPerPage));
-    } catch (error) {
-      console.log("fechPokemons error: ", error);
-    }
-  };
-
+ 
   useEffect(() => {
+    const fetchPokemons = async () => {
+      try {
+        setLoading(true);
+        const data = await getPokemones(itensPerPage, itensPerPage * pages);
+        const promises = data.results.map(async (pokemon) => {
+          return await getPokemonData(pokemon.url);
+        });
+        const result = await Promise.all(promises);
+        setPokemons(result);
+        setLoading(false);
+        setTotalPages(Math.ceil(data.count / itensPerPage));
+      } catch (error) {
+        console.log("fechPokemons error: ", error);
+      }
+    };
+  
     fetchPokemons();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [pages]);
 
 
   //paginacion
