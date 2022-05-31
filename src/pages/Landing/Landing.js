@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { createContext } from "react";
 import { useNavigate } from "react-router";
+import { AppContext } from "../../App";
 import Navbar from "../Navbar/Navbar";
 import LandingHero from "./LandingHero";
 import LandingInfo from "./LandingInfo";
@@ -9,9 +10,14 @@ export const LandingContext = createContext();
 
 export default function Landing() {
   const navigate = useNavigate();
+  const {isLogged} = useContext(AppContext)
 
   function onClick() {
-    navigate("login");
+    if(isLogged === true){
+      navigate("list")
+    }else{
+      navigate("login");
+    }
   }
 
   return (
