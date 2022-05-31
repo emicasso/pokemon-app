@@ -1,22 +1,38 @@
-import React from "react";
+import React, { useState, useEffect, useCallback} from "react";
 import { useNavigate } from "react-router";
 
-export default function Pokedex({ pokemon, type }) {
+export default function Pokedex({ pokemon, id, type }) {
+  const [speciePokemon, setSpeciePokemon] = useState();
   const navigate = useNavigate(); 
-
+  
   function handleClick(id){
     return () =>{
       navigate(`/pokemon/${id}`)
     }
   }
-  const style = {type};
-  console.log(style)
+  
+  const fetchSpeciesPokemon = useCallback(() => {
+   fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
+        .then((response) => response.json())
+       .then((result) => {
+          setSpeciePokemon(result.color?.name);
+        })
+        .catch((error) => console.log(error));
+    },[id]);
+
+
+useEffect(()=>{
+  
+  fetchSpeciesPokemon()
+}, [fetchSpeciesPokemon])
+
+
   return (
     <div className="flex flex-col">
       <div className="bg-gray-200 shadow-2xl rounded-3xl p-4" onClick={handleClick(pokemon.id)}>
         <div className="flex-none lg:flex ">
           {/* imagen */}
-          <div className=" h-full w-full lg:h-48 lg:w-48  lg:mb-0 mb-3 rounded-2xl" >
+          <div className=" h-full w-full lg:h-48 lg:w-48  lg:mb-0 mb-3 rounded-2xl" style={{ backgroundColor: speciePokemon }}>
             <img
               src={pokemon.sprites.front_default}
               alt="Just a flower"

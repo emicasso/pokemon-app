@@ -36,3 +36,10 @@
   .water {
     background-color:#E0F1FD;
   }
+
+  .bgcard{
+    background-image: url("https://i.pinimg.com/564x/8b/cc/d6/8bccd6e6fc36ed8a4ec6a1db7a0225bb.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }

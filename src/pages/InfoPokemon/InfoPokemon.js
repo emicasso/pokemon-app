@@ -3,15 +3,28 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router";
+import { Navbar } from "..";
 
 export default function InfoPokemon() {
   const navigate = useNavigate();
   const [dataPokemon, setInfPokemon] = useState();
   const [locationPokemon, setLocationPokemon] = useState();
+  const [speciePokemon, setSpeciePokemon] = useState();
   const params = useParams();
 
   const initalUrl = `https://pokeapi.co/api/v2/pokemon/${params.id}`;
   const locationUrl = `https://pokeapi.co/api/v2/pokemon/${params.id}/encounters`;
+
+  const specielUrl = `https://pokeapi.co/api/v2/pokemon-species/${params.id}`;
+
+  const fetchSpeciesPokemon = (url) => {
+    fetch(url)
+      .then((response) => response.json())
+      .then((result) => {
+        setSpeciePokemon(result.color?.name);
+      })
+      .catch((error) => console.log(error));
+  };
 
   const fetchInfoPokemon = (url) => {
     fetch(url)
@@ -33,10 +46,13 @@ export default function InfoPokemon() {
       .catch((error) => console.log(error));
   };
 
+  console.log(dataPokemon);
+
   useEffect(() => {
     fetchInfoPokemon(initalUrl);
     fetchLocationPokemon(locationUrl);
-  }, [initalUrl, locationUrl]);
+    fetchSpeciesPokemon(specielUrl);
+  }, [initalUrl, locationUrl, specielUrl]);
 
   function onClick() {
     navigate("/list");
@@ -46,75 +62,58 @@ export default function InfoPokemon() {
     return <div>Loading...</div>;
   }
   return (
-    <div className="h-screen container mx-auto font-Karla">
-      <div className="">
-        <button
-          onClick={onClick}
-          className="font-bold text-[#F9F4D0] bg-[#F2CB07] rounded-lg py-3 my-3 shadow-2xl px-10 uppercase border-b-8 border-[#C6A606] hover:bg-[#C6A606] hover:border-[#F2CB07] transition ease-in duration-150"
-        >
-          Volver a lista
-        </button>
-      </div>
-      <div className="rounded-3xl mx-auto overflow-hidden shadow-2xl shadow-[#F2CB07] w-1/2 my-3 bg-black">
-        <img alt="" src="https://i.imgur.com/dYcYQ7E.png" className="w-full" />
-        <div className="flex justify-center -mt-20">
+    <div className="h-screen mx-auto font-Karla bgcard">
+      <Navbar />
+      <button
+        onClick={onClick}
+        className="font-bold text-[#F9F4D0] bg-[#F2CB07] rounded-lg py-3 ml-16 my-3 shadow-2xl px-10 uppercase border-b-8 border-[#C6A606] hover:bg-[#C6A606] hover:border-[#F2CB07] transition ease-in duration-150"
+      >
+        Volver a lista
+      </button>
+      <div
+        className="rounded-3xl mx-auto overflow-hidden shadow-2xl w-1/2"
+        style={{ backgroundColor: speciePokemon }}
+      >
+        <div className="flex justify-center">
           <img
             alt=""
             src={dataPokemon.sprites.front_default}
-            className="rounded-full border-solid w-1/3 border-white border-2 -mt-3"
+            className="w-60"
           />
         </div>
-        <div className="text-center px-3 pb-6 pt-2 ">
-          <h3 className="text-white text-sm bold font-sans uppercase">
+        <div className="text-center">
+          <h3 className="text-white text-4xl bold uppercase">
             {dataPokemon.name}
           </h3>
-          <p className="mt-2 font-sans font-light text-white">
-            {" "}
+          <p className="mt-2  font-light text-white">
             Altura: {dataPokemon.height}mt
           </p>
         </div>
-        <div className="flex justify-center pb-3 text-white">
-          <div className="text-center mr-3 border-r pr-3">
-            <span>Habiblidad 1</span>
+        <div
+          className="flex text-2xl justify-around  text-white border mx-8 my-8 py-6  rounded-lg"
+          style={{
+            background:
+              "linear-gradient(126deg, rgba(85,84,93,1) 0%, rgba(182,182,182,1) 50%, rgba(85,84,93,1) 100%)",
+          }}
+        >
+          <div className="text-left">
+            <span>HABILIDADES:</span>
             {dataPokemon.abilities.map((element, i) => (
-              <h2>{element.ability.name}</h2>
+              <h2 key={i} className="uppercase">
+                -{element.ability.name}
+              </h2>
             ))}
           </div>
-          <div className="text-center">
-            <span>Donde Encontrarlo:</span>
-            {locationPokemon.map((element, i) => (
-              
-              <p className="mt-2 font-sans font-light text-white" key={i}>
-                <div className="flex-1 inline-flex items-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 mr-3 text-gray-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                  ></path>
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-                <span>{element.location_area.name}</span>
-              </div>
-              </p>
-            ))}
+          <div className="text-letf">
+            <span>HP: {dataPokemon.stats[0].base_stat}</span>
+            <br />
+            <span>ATTACK: {dataPokemon.stats[1].base_stat}</span>
+            <br />
+            <span>DEFENSE: {dataPokemon.stats[2].base_stat}</span>
           </div>
         </div>
-        <div className="text-start px-3 pb-6 pt-2 ">
-          
-        </div>
+
+        <div className="text-start px-3 pb-6 pt-2 "></div>
       </div>
     </div>
   );
