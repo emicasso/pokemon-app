@@ -1,13 +1,14 @@
 import React from "react";
 import { Navbar } from "..";
 import { useInfoPokemon } from "../../hooks/useInfoPokemon";
+import Loading from "../Loading";
 
 export default function InfoPokemon() {
   const { dataPokemon, locationPokemon, speciePokemon, onClick, textPokemon } =
     useInfoPokemon();
 
   if (dataPokemon === undefined || locationPokemon === undefined) {
-    return <div>Loading...</div>;
+    return <Loading/>;
   }
   return (
     <div className="h-screen mx-auto font-Karla bghero">
