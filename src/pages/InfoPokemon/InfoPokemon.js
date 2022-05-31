@@ -3,14 +3,14 @@ import { Navbar } from "..";
 import { useInfoPokemon } from "../../hooks/useInfoPokemon";
 
 export default function InfoPokemon() {
-  const { dataPokemon, locationPokemon, speciePokemon, onClick } =
+  const { dataPokemon, locationPokemon, speciePokemon, onClick, textPokemon } =
     useInfoPokemon();
 
   if (dataPokemon === undefined || locationPokemon === undefined) {
     return <div>Loading...</div>;
   }
   return (
-    <div className="h-screen mx-auto font-Karla bgcard">
+    <div className="h-screen mx-auto font-Karla bghero">
       <Navbar />
       <button
         onClick={onClick}
@@ -19,7 +19,7 @@ export default function InfoPokemon() {
         Volver a lista
       </button>
       <div
-        className="rounded-3xl mx-auto overflow-hidden shadow-2xl w-1/2"
+        className="rounded-3xl mx-auto overflow-hidden shadow-2xl shadow-[white] w-1/2"
         style={{ backgroundColor: speciePokemon }}
       >
         <div className="flex justify-center">
@@ -35,6 +35,9 @@ export default function InfoPokemon() {
           </h3>
           <p className="mt-2  font-light text-white">
             Altura: {dataPokemon.height}mt
+          </p>
+          <p className="mt-2  font-light text-white">
+            {textPokemon[79].flavor_text} {textPokemon[89].flavor_text}
           </p>
         </div>
         <div

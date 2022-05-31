@@ -6,6 +6,7 @@ export function useInfoPokemon() {
   const [dataPokemon, setInfPokemon] = useState();
   const [locationPokemon, setLocationPokemon] = useState();
   const [speciePokemon, setSpeciePokemon] = useState();
+  const [textPokemon, setTextPokemon] = useState("");
   const navigate = useNavigate();
   const params = useParams();
 
@@ -18,6 +19,7 @@ export function useInfoPokemon() {
       .then((response) => response.json())
       .then((result) => {
         setSpeciePokemon(result.color?.name);
+        setTextPokemon(result.flavor_text_entries)
       })
       .catch((error) => console.log(error));
   };
@@ -57,5 +59,6 @@ export function useInfoPokemon() {
     locationPokemon,
     speciePokemon,
     onClick,
+    textPokemon
   };
 }
