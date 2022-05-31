@@ -25,7 +25,7 @@ export default function InfoPokemon() {
         <div className="flex justify-center">
           <img
             alt=""
-            src={dataPokemon.sprites.front_default}
+            src={dataPokemon.sprites.other.home.front_default}
             className="w-60"
           />
         </div>
