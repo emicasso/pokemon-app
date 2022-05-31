@@ -1,10 +1,10 @@
 import React from "react";
 import { useContext } from "react";
-import { UsersContext } from "../List/List";
+import { ListContext } from "../List/List";
 
 export default function Paginacion() {
   const { onLeftClick, onRightClick, pages, totalPages } =
-    useContext(UsersContext);
+    useContext(ListContext);
 
   return (
     <div className="flex items-center justify-center">

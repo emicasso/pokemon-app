@@ -1,34 +1,21 @@
 import React from "react";
-import { useState } from "react";
-import { useContext } from "react";
 import { createContext } from "react";
-import { useNavigate } from "react-router";
-import { AppContext } from "../../App";
+import { useLogin } from "../../hooks/useLogin";
 import Navbar from "../Navbar";
 import LoginForm from "./LoginForm";
 
 export const LoginContex = createContext();
 
 export default function Login() {
-  const navigate = useNavigate();
-  const { onSuccess } = useContext(AppContext);
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-
-  function onLoginFormSuccess() {
-     onSuccess();
-     navigate("/list");
-  } 
-
-  function onEmailChange(event) {
-    setEmail(event.target.value);
-  }
-
-  function onPasswordChange(event) {
-    setPassword(event.target.value);
-  }
+  const {
+    onLoginFormSuccess,
+    email,
+    password,
+    onEmailChange,
+    onPasswordChange,
+    setError,
+    error,
+  } = useLogin();
 
   return (
     <LoginContex.Provider
@@ -38,12 +25,12 @@ export default function Login() {
         onEmailChange,
         onPasswordChange,
         setError,
-        error
+        error,
       }}
     >
       <div className="h-screen">
         <Navbar />
-        <LoginForm onSuccess={onLoginFormSuccess}/>
+        <LoginForm onSuccess={onLoginFormSuccess} />
       </div>
     </LoginContex.Provider>
   );

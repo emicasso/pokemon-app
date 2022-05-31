@@ -1,38 +1,41 @@
-import React, { useState, useEffect, useCallback} from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router";
 
 export default function Pokedex({ pokemon, id, type }) {
   const [speciePokemon, setSpeciePokemon] = useState();
-  const navigate = useNavigate(); 
-  
-  function handleClick(id){
-    return () =>{
-      navigate(`/pokemon/${id}`)
-    }
+  const navigate = useNavigate();
+
+  function handleClick(id) {
+    return () => {
+      navigate(`/pokemon/${id}`);
+    };
   }
-  
+
   const fetchSpeciesPokemon = useCallback(() => {
-   fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
-        .then((response) => response.json())
-       .then((result) => {
-          setSpeciePokemon(result.color?.name);
-        })
-        .catch((error) => console.log(error));
-    },[id]);
+    fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
+      .then((response) => response.json())
+      .then((result) => {
+        setSpeciePokemon(result.color?.name);
+      })
+      .catch((error) => console.log(error));
+  }, [id]);
 
-
-useEffect(()=>{
-  
-  fetchSpeciesPokemon()
-}, [fetchSpeciesPokemon])
-
+  useEffect(() => {
+    fetchSpeciesPokemon();
+  }, [fetchSpeciesPokemon]);
 
   return (
     <div className="flex flex-col">
-      <div className="bg-gray-200 shadow-2xl rounded-3xl p-4" onClick={handleClick(pokemon.id)}>
+      <div
+        className="bg-gray-200 shadow-2xl rounded-3xl p-4"
+        onClick={handleClick(pokemon.id)}
+      >
         <div className="flex-none lg:flex ">
           {/* imagen */}
-          <div className=" h-full w-full lg:h-48 lg:w-48  lg:mb-0 mb-3 rounded-2xl" style={{ backgroundColor: speciePokemon }}>
+          <div
+            className=" h-full w-full lg:h-48 lg:w-48  lg:mb-0 mb-3 rounded-2xl"
+            style={{ backgroundColor: speciePokemon }}
+          >
             <img
               src={pokemon.sprites.front_default}
               alt="Just a flower"
@@ -77,13 +80,12 @@ useEffect(()=>{
             </div>
             {/* tipo */}
             <div className="flex lg:px-4 px-40 pb-2 border-t border-gray-200 " />
-           
-              <div className="flex-1 inline-flex items-center" >
-                <span className="mx-2 md:mb-0 bg-white px-1 py-2 shadow-sm tracking-wider border text-gray-600 rounded-full hover:bg-gray-400 inline-flex items-center space-x-2 ">
+
+            <div className="flex-1 inline-flex items-center">
+              <span className="mx-2 md:mb-0 bg-white px-1 py-2 shadow-sm tracking-wider border text-gray-600 rounded-full hover:bg-gray-400 inline-flex items-center space-x-2 ">
                 {type}
-                </span>
-              </div>
-            
+              </span>
+            </div>
           </div>
         </div>
       </div>

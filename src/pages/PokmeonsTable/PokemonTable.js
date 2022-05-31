@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import { UsersContext } from "../List/List";
+import { ListContext } from "../List/List";
 import Paginacion from "./Paginacion";
 import Pokedex from "./Pokedex";
 // import SearchPokemon from "./SearchPokemon";
 
 export default function PokemonTable() {
-  const { pokemons, loading } = useContext(UsersContext);
+  const { pokemons, loading } = useContext(ListContext);
 
   return (
     <div className="pt-20 pb-10">

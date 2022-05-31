@@ -43,3 +43,9 @@
     background-size: cover;
     background-position: center;
   }
+  
+  .bghero{
+    background-image: url("../public/Background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }

@@ -19,6 +19,7 @@ export default function Navbar() {
     <nav className="bg-[#F5DB13] shadow-2xl">
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div className="relative flex items-center justify-center h-16">
+          
           <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-center">
             <div className="flex-shrink-0 flex items-center">
               <img
@@ -28,6 +29,7 @@ export default function Navbar() {
               />
             </div>
           </div>
+
           {isLogged === true ? (
             <button
               onClick={onLogout}
@@ -36,6 +38,7 @@ export default function Navbar() {
               Cerrar sesion
             </button>
           ) : null}
+          
         </div>
       </div>
     </nav>
