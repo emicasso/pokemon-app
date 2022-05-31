@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getPokemonData, getPokemones } from "../services/pokemons";
 
 export function useList() {
@@ -9,7 +9,7 @@ export function useList() {
 
   const itensPerPage = 20;
 
-  const fetchPokemons = async () => {
+  const fetchPokemons = useCallback(async () => {
     try {
       setLoading(true);
       const data = await getPokemones(itensPerPage, itensPerPage * pages);
@@ -23,11 +23,11 @@ export function useList() {
     } catch (error) {
       console.log("fechPokemons error: ", error);
     }
-  };
+  }, [pages])
 
   useEffect(() => {
     fetchPokemons();
-  }, [pages]);
+  }, [fetchPokemons]);
 
   //paginacion
   const onLeftClick = () => {
