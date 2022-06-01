@@ -30,8 +30,8 @@ export default function LoginForm({ onSuccess }) {
         <div className="font-Karla font-bold self-center text-center text-xl sm:text-6xl text-[#545644]">
           TU POKEDEX
         </div>
-        <div className="mt-4 self-center text-xl sm:text-sm text-gray-800">
-          Ingresa tus datos como entreandor Pokemon
+        <div className="mt-4 p-6 self-center text-xl sm:text-sm text-center text-gray-800">
+          Ingresa tus datos como nuevo entreandor Pokemon. <br/> Sin necesidad de registrarse
         </div>
         {error.length > 0 ? (
           <div className="w-full text-center text-red-700 font-Karla border border-red-700 py-3 mt-5">
