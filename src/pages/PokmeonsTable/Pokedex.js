@@ -19,8 +19,6 @@ export default function Pokedex({ pokemon, id, type }) {
       .catch((error) => console.log(error));
   }, [id]);
 
-  console.log(pokemon);
-
   useEffect(() => {
     fetchSpeciesPokemon();
   }, [fetchSpeciesPokemon]);
